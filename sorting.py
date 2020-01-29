@@ -212,3 +212,31 @@ def quick_sort(nums):  # n^2
             _quick_sort(items, split_index + 1, high)
 
     _quick_sort(nums, 0, nums.get_len() - 1)
+
+def shell_sort(nums): # n^2
+  
+   # ShellSort is mainly a variation of Insertion Sort. In insertion sort, we move elements only one position ahead. 
+   # The idea of shellSort is to allow exchange of far items. In shellSort, we make the array h-sorted for a large value of h. 
+   # We keep reducing the value of h until it becomes 1.An array is said to be h-sorted if all sublists of every h’th element is sorted.
+  
+    gap = nums.get_len() // 2
+
+	# Do a gapped insertion sort for this gap size. 
+	# The first gap elements a[0..gap-1] are already in gapped order 
+    # keep adding one more element until the entire array is gap sorted 
+
+    while gap > 0:
+        for i in range(gap,nums.get_len()):
+            # add a[i] to the elements that have been gap sorted 
+			# save a[i] in temp and make a hole at position i 
+            temp = nums.values[i]
+
+            # shift earlier gap-sorted elements up until the correct 
+			# location for nums[i] is found 
+            j = i
+            while j > gap and nums.values[j-gap] > temp:
+                nums.values[j] = nums.values[j-gap]
+                j -= gap
+                # put temp (the original a[i]) in its correct location
+                nums.values[j] = temp
+        gap //= 2
